@@ -61,3 +61,4 @@ document.addEventListener("DOMContentLoaded", function() {
     // Call the function initially to set the default state
     handleUserTypeChange();
 });
+
