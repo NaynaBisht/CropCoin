@@ -3,59 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farmer Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
-</head>
-<body>
-    <div class="dashboard-container">
-        <div class="header">
-            <button class="profile-button">Profile</button>
-            <h1>Farmer Dashboard</h1>
-            <button class="credits-button">Credits:</button>
-        </div>
+    <title>MarketPlace - CropCoin</title>
+    <link rel="icon" href="../assets/pictures/planting.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;900&display=swap" rel="stylesheet">
+    <style>
+        .category-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 3rem;
+        }
 
-        <div class="loan-items">
-            <div class="item">
-                <h2>Seeds</h2>
-                <ul>
-                    <li>Wheat Seeds - 50kg - Rs.4000</li>
-                    <li>Corn Seeds - 30kg - Rs.12000</li>
-                    <li>Rice Seeds - 40kg - Rs.18000</li>
-                </ul>
+        .category {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            width: 300px;
+            padding: 1.5rem;
+            margin: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="font-poppins bg-cover bg-no-repeat min-h-screen w-full overflow-relative" style="background-image: url('../assets/pictures/output-onlinepngtools.png');">
+
+    <nav class="m-4 p-2 shadow-md bg-green-200 bg-opacity-70">
+        <ul class="flex justify-center space-x-12 bg-yellow-200 bg-opacity-90 p-1">
+            <li class="text-lg font-bold">Home</li>
+            <li class="text-lg font-bold">Stakeholders</li>
+            <li class="text-lg font-bold">DPI Registration</li>
+            <li class="text-lg font-bold">Contact Us</li>
+        </ul>
+
+        <div class="flex flex-col md:flex-row items-center justify-between mx-24 mt-4">
+
+            <div class="flex items-center space-x-64">
+                <img src="../assets/pictures/99AN7RJA.png" alt="Planting Image" class="w-24 h-22">
+                <div class="ml-28">
+                    <h1 class="text-4xl font-bold">Farmer Dashboard</h1>
+                </div>
             </div>
-            <div class="item">
-                <h2>Fertilizers</h2>
-                <ul>
-                    <li>Nitrogen Fertilizer - 20kg - Rs.14000</li>
-                    <li>Phosphorus Fertilizer - 25kg - Rs.17500</li>
-                    <li>Potassium Fertilizer - 15kg - Rs.3750</li>
-                </ul>
-            </div>
-            <div class="item">
-                <h2>Pesticides</h2>
-                <ul>
-                    <li>Herbicide - 10L - Rs.12800</li>
-                    <li>Insecticide - 15L - Rs.8700</li>
-                    <li>Fungicide - 5L - Rs.3650</li>
-                </ul>
-            </div>
-            <div class="item">
-                <h2>Harvesters</h2>
-                <ul>
-                    <li>Combine Harvester - 1 unit - Rs.90000</li>
-                    <li>Mini Harvester - 2 units - Rs.70000</li>
-                </ul>
-            </div>
-            <div class="item">
-                <h2>Rakes</h2>
-                <ul>
-                    <li>Metal Rake - 10 units - Rs.23000</li>
-                    <li>Plastic Rake - 15 units - Rs.17500</li>
-                </ul>
+
+            <div class="flex space-x-4 mt-4 md:mt-0">
+                <div class="bg-yellow-500 font-bold text-lg py-2 px-4 rounded hover:bg-green-600">
+                    <a href="index.html">
+                        <button >Log Out</button>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-    
+    </nav>
+
+    <main class="category-section">
+        <a href="itemsBought.html"><div class="category">Items Bought</div></a>
+        <a href="farmerProfile.html"><div class="category">Profile</div></a>
+        <a href="Invoice.html"><div class="category">Credits </div></a>
+    </main>
+ 
 </body>
 </html>

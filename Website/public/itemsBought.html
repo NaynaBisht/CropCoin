@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="script.js"></script>
+
+    <link rel="icon" href="../assets/pictures/planting.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;900&display=swap" rel="stylesheet">
+
+
+</head>
+<body class="font-poppins bg-cover bg-no-repeat min-h-screen w-full overflow-relative" style="background-image: url('../assets/pictures/output-onlinepngtools.png');">
+
+    <nav class="m-4 p-2 shadow-md bg-green-200 bg-opacity-70">
+        <ul class="flex justify-center space-x-12 bg-yellow-200 bg-opacity-90 p-1">
+            <li class="text-lg font-bold">Home</li>
+            <li class="text-lg font-bold">Stakeholders</li>
+            <li class="text-lg font-bold">DPI Registration</li>
+            <li class="text-lg font-bold">Contact Us</li>
+        </ul>
+
+        <div class="flex flex-col md:flex-row items-center justify-between mx-24 mt-4">
+
+            <div class="flex items-center space-x-64">
+                <img src="../assets/pictures/99AN7RJA.png" alt="Planting Image" class="w-24 h-22">
+                <div class="ml-28">
+                    <h1 class="text-4xl font-bold">Farmer Dashboard</h1>
+                </div>
+            </div>
+
+            <div class="flex space-x-4 mt-4 md:mt-0">
+                <div class="bg-yellow-500 font-bold text-lg py-2 px-4 rounded hover:bg-green-600">
+                    <a href="index.html">
+                        <button >Log Out</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ml-32">
+        <table class="w-[90%] border bg-transparent">
+            <thead>
+                <tr class="bg-green-900 text-white text-left">
+                    <th class="py-3 px-4 text-3xl font-bold">Item</th>
+                    <th class="py-3 px-4 text-3xl font-bold">Type</th>
+                    <th class="py-3 px-4 text-3xl font-bold">Amount</th>
+                    <th class="py-3 px-4 text-3xl font-bold">Price</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <!-- Seeds Row -->
+                <tr class="border-b border-gray-200">
+                    <td class="py-3 px-4 text-2xl font-bold text-green-900" rowspan="3">Seeds</td>
+                    <td class="py-3 px-4 text-lg font-semibold">Wheat Seeds</td>
+                    <td class="py-3 px-4 text-lg font-semibold">50kg</td>
+                    <td class="py-3 px-4 text-lg font-semibold">Rs.4000</td>
+                </tr>
+                <tr class="border-b border-gray-200">
+                    <td class="py-3 px-4 text-lg font-semibold">Corn Seeds</td>
+                    <td class="py-3 px-4 text-lg font-semibold">30kg</td>
+                    <td class="py-3 px-4 text-lg font-semibold">Rs.12000</td>
+                </tr>
+                <tr class="border-b border-gray-200">
+                    <td class="py-3 px-4 text-lg font-semibold">Rice Seeds</td>
+                    <td class="py-3 px-4 text-lg font-semibold">40kg</td>
+                    <td class="py-3 px-4 text-lg font-semibold">Rs.18000</td>
+                </tr>
+    
+                <!-- Fertilizers Row -->
+                <tr class="border-b border-gray-200">
+                    <td class="py-3 px-4 text-2xl font-bold text-green-900" rowspan="3">Fertilizers</td>
+                    <td class="py-3 px-4 text-lg font-semibold">Nitrogen Fertilizer</td>
+                    <td class="py-3 px-4 text-lg font-semibold">20kg</td>
+                    <td class="py-3 px-4 text-lg font-semibold">Rs.14000</td>
+                </tr>
+                <tr class="border-b border-gray-200">
+                    <td class="py-3 px-4 text-lg font-semibold">Phosphorus Fertilizer</td>
+                    <td class="py-3 px-4 text-lg font-semibold">25kg</td>
+                    <td class="py-3 px-4 text-lg font-semibold">Rs.17500</td>
+                </tr>
+                <tr class="border-b border-gray-200">
+                    <td class="py-3 px-4 text-lg font-semibold">Potassium Fertilizer</td>
+                    <td class="py-3 px-4 text-lg font-semibold">15kg</td>
+                    <td class="py-3 px-4 text-lg font-semibold">Rs.3750</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    
+    
+</body>
+</html>
