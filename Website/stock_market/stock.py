@@ -1,40 +1,50 @@
+import asyncio
+import websockets
 import socket
 import threading
-import time
-from check import Stock
 
-def handle_client_connection(client_socket):
-    global current_price
-    while True:
-        # Send the current price to the client
-        client_socket.sendall(current_price.encode('utf-8'))
-        time.sleep(1)
+price = 50  # Initial price
+price_lock = threading.Lock()
 
-def update_price(new_price):
-    global current_price
-    current_price = str(new_price)
-    print(f"Price updated to: {current_price}")
+# This function will handle broadcasting the price via WebSockets
+async def broadcast_price(websocket):
+    global price
+    try:
+        while True:
+            with price_lock:
+                current_price = price
+            await websocket.send(str(current_price))
+            await asyncio.sleep(1)  # Broadcast every second
+    except websockets.ConnectionClosed as e:
+        print(f"WebSocket connection closed with code {e.code}")
 
-def start_server():
+# This function will handle updating the price received from check.py
+def update_price():
+    global price
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind(('localhost', 65432))
-    server_socket.listen(5)
-    print("Server started, waiting for connections...")
-
+    server_socket.listen(1)
+    print("Waiting for connection to update price...")
+    
     while True:
-        client_socket, addr = server_socket.accept()
-        print(f"Connection from {addr} has been established.")
-        client_handler = threading.Thread(
-            target=handle_client_connection, args=(client_socket,)
-        )
-        client_handler.start()
+        conn, addr = server_socket.accept()
+        with conn:
+            print(f"Connected by {addr}")
+            data = conn.recv(1024)
+            if data:
+                with price_lock:
+                    price = float(data.decode('utf-8'))
+                    print(f"Updated price: {price}")
+
+# This function starts the WebSocket server and listens for connections to broadcast the price
+async def main():
+    start_server = websockets.serve(broadcast_price, "localhost", 8765)
+    await start_server
+    await asyncio.Future()  # Run forever
 
 if __name__ == "__main__":
-    server_thread = threading.Thread(target=start_server)
-    server_thread.start()
-    s = Stock()
-
-    # Simulate user updating the price
-    while True:
-        update_price(s.update_price(4.7*10**9))
-        time.sleep(1)
+    # Run the update_price function in a separate thread to listen for price updates
+    threading.Thread(target=update_price, daemon=True).start()
+    
+    # Start the WebSocket server
+    asyncio.run(main())
