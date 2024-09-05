@@ -2,13 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let series; // Declare series here
     let chart; // Declare chart here
     let socket; // WebSocket variable
-    let dataPoints = []; // Store data points here
-
-    if (typeof LightweightCharts === 'undefined') {
-        console.error('LightweightCharts is not defined');
-    } else {
-        console.log('LightweightCharts is available');
-    }
+    let historicalData = []; // Store historical data here
+    let liveData = []; // Store live data here
+    let lastUpdate = Date.now();
 
     // Initialize TradingView chart
     function initializeChart() {
@@ -38,9 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 wickColor: '#ff4976',
             });
 
-            // Initialize the chart with some data if available
-            if (dataPoints.length > 0) {
-                series.setData(dataPoints);
+            // Initialize the chart with historical data if available
+            if (historicalData.length > 0) {
+                series.setData(historicalData);
             }
         }
     }
@@ -55,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         socket.onclose = function(event) {
             console.log('WebSocket connection closed:', event);
-            // Attempt to reconnect if needed
             setTimeout(() => {
                 initializeWebSocket(); // Reinitialize WebSocket
             }, 1000);
@@ -71,22 +66,60 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('price').innerText = `Current Price: $${price}`;
 
             const now = Math.floor(new Date().getTime() / 1000); // Convert to Unix timestamp
-            const dataPoint = {
+            const liveDataPoint = {
                 time: now,
                 open: price,
-                high: price + 1,
-                low: price - 1,
+                high: price,
+                low: price,
                 close: price
             };
 
-            // Add new data point and keep only the last `maxDataPoints` points
-            dataPoints.push(dataPoint);
+            liveData.push(liveDataPoint);
+
+            // Add live data to the chart
             if (series) {
-                series.setData(dataPoints); // Update the series with the fixed-size data buffer
+                series.update(liveDataPoint);
             } else {
                 console.error('Series is not initialized.');
             }
+
+            // Aggregate historical data to 1-minute intervals
+            historicalData = aggregateDataToMinute(liveData);
+            if (series) {
+                series.setData(historicalData); // Update historical data on the chart
+            }
         };
+    }
+
+    // Function to aggregate data to 1-minute intervals
+    function aggregateDataToMinute(dataPoints) {
+        const aggregated = [];
+        let currentMinute = Math.floor(dataPoints[0].time / 60) * 60;
+        let open = dataPoints[0].open;
+        let high = dataPoints[0].high;
+        let low = dataPoints[0].low;
+        let close = dataPoints[0].close;
+
+        dataPoints.forEach(point => {
+            const minute = Math.floor(point.time / 60) * 60;
+            if (minute !== currentMinute) {
+                aggregated.push({ time: currentMinute, open, high, low, close });
+                currentMinute = minute;
+                open = point.open;
+                high = point.high;
+                low = point.low;
+                close = point.close;
+            } else {
+                high = Math.max(high, point.high);
+                low = Math.min(low, point.low);
+                close = point.close;
+            }
+        });
+
+        // Push the last interval data
+        aggregated.push({ time: currentMinute, open, high, low, close });
+
+        return aggregated;
     }
 
     initializeChart(); // Initialize the chart
@@ -118,5 +151,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     fetchTransactions();
-    setInterval(fetchTransactions, 5000); // Update transactions every 5 seconds
+    setInterval(fetchTransactions, 2000); // Update transactions every 2 seconds
 });
