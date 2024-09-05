@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment - CropCoin</title>
+    <link rel="icon" href="../static/assets/planting.png" type="image/png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+            background-image: url('../static/assets/output-onlinepngtools.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        h1 {
+            color: #3c763d;
+            text-align: center;
+            font-size: 2rem;
+            margin-top: 20px;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            color: #dca809;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .item-list {
+            margin: 20px auto;
+            width: 80%;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+            align-items: center;
+        }
+        .item:last-child {
+            border-bottom: none;
+        }
+        .item-name {
+            font-size: 1.2rem;
+            color: #333;
+        }
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+        .quantity-controls button {
+            background-color: #3c763d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .quantity-controls button:hover {
+            background-color: #dca809;
+        }
+        .quantity-controls input {
+            width: 40px;
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 0 10px;
+            border: 1px solid #3c763d;
+            border-radius: 4px;
+        }
+        .total-items {
+            margin: 20px auto;
+            width: 80%;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        #proceedButton {
+            margin: 20px auto;
+            display: block;
+            width: 200px;
+            padding: 10px;
+            background-color: #3c763d;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        #proceedButton:hover {
+            background-color: #dca809;
+        }
+        .show-more {
+            color: #3c763d;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .show-more:hover {
+            color: #dca809;
+        }
+    </style>
+</head>
+<body>
+    <h1>Equipment - Happy Shopping!!</h1>
+
+    <div class="item-list">
+        <div class="section-title">Farming Tools</div>
+        <div class="item">
+            <div class="item-name">Plow (Harrow/Plough)</div>
+            <div class="quantity-controls">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input type="text" value="0" readonly>
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-name">Sickle</div>
+            <div class="quantity-controls">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input type="text" value="0" readonly>
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-name">Hoe (Khurpi)</div>
+            <div class="quantity-controls">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input type="text" value="0" readonly>
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-name">Spade (Kassi)</div>
+            <div class="quantity-controls">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input type="text" value="0" readonly>
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-name">Axe (Kulhadi)</div>
+            <div class="quantity-controls">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input type="text" value="0" readonly>
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-name">Seed Drill</div>
+            <div class="quantity-controls">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input type="text" value="0" readonly>
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+        </div>
+        <div class="item show-more">Show more...</div>
+    </div>
+
+    <div class="item-list">
+        <div class="section-title">Irrigation Tools</div>
+        <div class="item">
+            <div class="item-name">Drip Irrigation System</div>
+            <div class="quantity-controls">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input type="text" value="0" readonly>
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-name">Sprinkle System</div>
+            <div class="quantity-controls">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input type="text" value="0" readonly>
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-name">PVC Pipes</div>
+            <div class="quantity-controls">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input type="text" value="0" readonly>
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+        </div>
+        <div class="item show-more">Show more...</div>
+    </div>
+
+    <div class="item-list">
+        <div class="section-title">Storage and Post-Harvest</div>
+        <div class="item">
+            <div class="item-name">Grain Storage Bins</div>
+            <div class="quantity-controls">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input type="text" value="0" readonly>
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-name">Chaff Cutter</div>
+            <div class="quantity-controls">
+                <button onclick="decreaseQuantity(this)">-</button>
+                <input type="text" value="0" readonly>
+                <button onclick="increaseQuantity(this)">+</button>
+            </div>
+        </div>
+        <div class="item show-more">Show more...</div>
+    </div>
+
+    <div class="total-items">Total Items Added: <span id="totalCount">0</span></div>
+    <a id="proceedButton" href="Invoice.html" onclick="saveSelectedItems()">Proceed</a>
+
+    <script>
+        function increaseQuantity(button) {
+            const input = button.previousElementSibling;
+            let currentValue = parseInt(input.value);
+            input.value = currentValue + 1;
+            updateTotalCount();
+        }
+
+        function decreaseQuantity(button) {
+            const input = button.nextElementSibling;
+            let currentValue = parseInt(input.value);
+            if (currentValue > 0) {
+                input.value = currentValue - 1;
+                updateTotalCount();
+            }
+        }
+
+        function updateTotalCount() {
+            let totalCount = 0;
+            const inputs = document.querySelectorAll('.quantity-controls input');
+            inputs.forEach(input => {
+                totalCount += parseInt(input.value);
+            });
+            document.getElementById('totalCount').textContent = totalCount;
+        }
+        function saveSelectedItems() {
+            const items = [];
+            const itemNames = document.querySelectorAll('.item-name');
+            const itemQuantities = document.querySelectorAll('.quantity-controls input');
+    
+            itemNames.forEach((item, index) => {
+                const quantity = parseInt(itemQuantities[index].value);
+                if (quantity > 0) {
+                    items.push({
+                        name: item.textContent,
+                        quantity: quantity,
+                        price: getPrice(item.textContent) // Assume getPrice is a function that returns the price based on item name
+                    });
+                }
+            });
+    
+            localStorage.setItem('selectedItems', JSON.stringify(items));
+        }
+    
+        function getPrice(itemName) {
+            const prices = {
+                'Plow (Harrow/Plough)': 50,
+                'Sickle': 100,
+                'Hoe (Khurpi)': 150,
+                'Spade (Kassi)': 120,
+                'Axe (Kulhadi)': 90,
+                'Seed Drill': 200,
+                'Drip Irrigation System': 180,
+                'Sprinkle System': 250,
+                'PVC Pipes': 80,
+                'Grain Storage Bins': 60,
+                'Chaff Cutter': 45
+            };
+            return prices[itemName] || 0;
+        }
+    
+        document.getElementById('proceedButton').addEventListener('click', saveSelectedItems);
+    </script>
+</body>
+</html>

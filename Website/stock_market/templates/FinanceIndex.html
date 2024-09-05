@@ -4,35 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Tracker</title>
+    <link rel="icon" href="../static/assets/planting.png" type="image/png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lightweight-charts@3.4.0/dist/lightweight-charts.standalone.production.js"></script>
+    
     <script src="{{ url_for('static', filename='app.js') }}"></script> <!-- Corrected path -->
+
 </head>
-<body>
-    <div class="m-4 p-2 shadow-md bg-green-200 bg-opacity-70 rounded-md">
-        <h1 class="text-4xl font-bold text-center text-black">Stock Tracker</h1>
-        <h2 class="text-2xl font-bold text-black mt-8">Candlestick Chart</h2>
-        <div id="candlestick-chart" class="mt-4" style="position: relative; height: 400px; width: 100%;"></div>
-        <p id="price" class="text-xl text-center text-black mt-4"></p>
-        <h2 class="text-2xl font-bold text-black mt-8">Buy Shares</h2>
-        <form action="{{ url_for('buy') }}" method="post">
-            <label class="block text-lg text-black" for="quantity">Number of Shares:</label>
-            <input type="number" id="quantity" name="quantity" min="1" required class="mt-2 p-2 border border-gray-300 rounded-md w-full">
-            <button type="submit" class="mt-4 bg-yellow-500 font-bold text-lg py-2 px-4 rounded hover:bg-green-600">Buy</button>
-        </form>
+<body class="font-poppins bg-cover bg-no-repeat min-h-screen w-full overflow-relative" style="background-image: url('../../static/assets/output-onlinepngtools.png');">
 
-        <h2 class="text-2xl font-bold text-black mt-8">Sell Shares</h2>
-        <form action="{{ url_for('sell') }}" method="post">
-            <label class="block text-lg text-black" for="quantity">Number of Shares:</label>
-            <input type="number" id="quantity" name="quantity" min="1" required class="mt-2 p-2 border border-gray-300 rounded-md w-full">
-            <button type="submit" class="mt-4 bg-yellow-500 font-bold text-lg py-2 px-4 rounded hover:bg-green-600">Sell</button>
-        </form>
-
-        <h2 class="text-2xl font-bold text-black mt-8">Transactions</h2>
-        <ul id="transactions-list" class="mt-4 text-black">
-            <!-- This section will be populated with transactions only when data is available -->
+    <nav class="m-4 p-2 shadow-md bg-green-200 bg-opacity-70">
+        <ul class="flex justify-center space-x-12 bg-yellow-200 bg-opacity-90 p-1">
+            <li class="text-lg font-bold">Home</li>
+            <li class="text-lg font-bold">Stakeholders</li>
+            <li class="text-lg font-bold">DPI Registration</li>
+            <li class="text-lg font-bold">Contact Us</li>
         </ul>
+
+        <div class="flex flex-col md:flex-row items-center justify-between mx-24 mt-4">
+
+            <div class="flex items-center space-x-4">
+                <img src="../static/assets/99AN7RJA.png" alt="Planting Image" class="w-24 h-22">
+                <div>
+                    <h1 class="text-4xl font-bold">CropCoin</h1>
+                    <p class="text-lg">Invest And Grow In The Future</p>
+                </div>
+            </div>
+
+            <div class="bg-yellow-200 font-bold text-5xl py-2 px-4 rounded mt-2">
+                <h1>Stock Tracker</h1>
+            </div>
+        </div>
+    </nav>
+
+    <div class="m-4 shadow-md rounded-md flex">
+
+        <div class= "p-3 m-2 w-[40%]" style="background-color: rgba(104, 237, 195, 0.3);">
+            <h2 class="text-2xl font-bold ">Buy Shares</h2>
+            <form action="{{ url_for('buy') }}" method="post">
+                <label class="block text-lg text-black" for="quantity">Number of Shares :</label>
+                <input type="number" id="quantity" name="quantity" min="1" required class="mt-2 p-2 border border-gray-300 rounded-md w-full">
+                <button type="submit" class="mt-4 bg-yellow-500 font-bold text-lg py-2 px-4 rounded hover:bg-green-600">BUY</button>
+            </form>
+
+            <h2 class="text-2xl font-bold text-black mt-4">Sell Shares</h2>
+            <form action="{{ url_for('sell') }}" method="post">
+                <label class="block text-lg text-black" for="quantity">Number of Shares :</label>
+                <input type="number" id="quantity" name="quantity" min="1" required class="mt-2 p-2 border border-gray-300 rounded-md w-full">
+                <button type="submit" class="mt-4 bg-yellow-500 font-bold text-lg py-2 px-4 rounded hover:bg-green-600">SELL </button>
+            </form>
+
+            <h2 class="text-2xl font-bold text-black mt-4">Transactions :</h2>
+            <ul id="transactions-list" class="mt-4 text-black">
+                <!-- This section will be populated with transactions only when data is available -->
+            </ul>
+        </div>
+
+        <div class="ml-5 p-3 w-[80%]" style="background-color: rgba(225, 195, 84, 0.50);">
+            <h2 class="text-2xl font-bold text-black mt-8">Candlestick Chart</h2>
+            <div id="candlestick-chart" class="mt-4" style="position: relative; height: 400px; width: 100%;"></div>
+            <p id="price" class="text-xl text-center text-black mt-4"></p>
+        </div>
+
     </div>
 </body>
 </html>
