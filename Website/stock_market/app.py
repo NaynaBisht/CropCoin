@@ -6,7 +6,7 @@ s = Stock()
 
 @app.route('/')
 def index():
-    return render_template('index.html', current_price=s.price, transactions=[])
+    return render_template('FinanceIndex.html', current_price=s.price, transactions=[])
 
 @app.route('/buy', methods=['POST'])
 def buy():
