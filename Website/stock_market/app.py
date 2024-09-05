@@ -12,13 +12,13 @@ def index():
 def buy():
     quantity = int(request.form['quantity'])
     s.buy(quantity)
-    return redirect(url_for('index'))
+    return '', 204
 
 @app.route('/sell', methods=['POST'])
 def sell():
     quantity = int(request.form['quantity'])
     s.sell(quantity)
-    return redirect(url_for('index'))
+    return '', 204
 
 @app.route('/transactions')
 def transactions():
@@ -28,4 +28,3 @@ def transactions():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
