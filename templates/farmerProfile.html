@@ -53,19 +53,26 @@
             </div>
         </div>
     </nav>
-    <main class="category-section">
-        {% if farmers %}
-            {% for farmer in farmers %}
-                <div class="mb-4">
-                    <h2 class="text-2xl font-bold">{{ farmer.fullname }}</h2>
-                    <p><strong>Aadhar Number:</strong> {{ farmer.aadhar }}</p>
-                    <p><strong>Farm Size:</strong> {{ farmer.farm_size }} acres</p>
-                    <p><strong>Farm Location:</strong> {{ farmer.farm_location }}</p>
-                </div>
-            {% endfor %}
+    <!-- farmerProfile.html -->
+    <main class="max-w-xl mx-auto p-6 bg-green-100 shadow-lg rounded-lg">
+        <h1 class="text-3xl font-bold mb-6">Profile</h1>
+        {% if farmer %}
+            <div class="bg-green-50 p-4 rounded-lg border border-green-300">
+                <h2 class="text-2xl font-semibold mb-2">{{ farmer.fullname }}</h2>
+                <p class="text-lg mb-2"><strong>Aadhar Number:</strong> {{ farmer.aadhar }}</p>
+                <p class="text-lg mb-2"><strong>User Name:</strong> {{ farmer.username }}</p>
+                <p class="text-lg mb-2"><strong>User Type:</strong> {{ farmer.usertype }}</p>
+                <p class="text-lg mb-2"><strong>Farm Size:</strong> {{ farmer.farm_size }} acres</p>
+                <p class="text-lg mb-2"><strong>Farm Location:</strong> {{ farmer.farm_location }}</p>
+            </div>
         {% else %}
-            <p>No farmers found.</p>
+            <p class="text-center text-red-500">No profile data found.</p>
         {% endif %}
+        <div class="mt-6 text-center">
+            <a href="{{ url_for('farmer_dashboard') }}" class="inline-block bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg shadow hover:bg-yellow-600">Back to Dashboard</a>
+        </div>
     </main>
+    
+
 </body>
 </html>

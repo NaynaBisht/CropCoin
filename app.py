@@ -3,15 +3,38 @@ from flask import Flask, request, render_template, redirect, url_for, jsonify
 from check import Stock
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 app = Flask(__name__)
 s = Stock()
+
+app.secret_key = 'your_secret_key'  # Change this to a real secret key for session management
+
+# Initialize Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
 
 client = MongoClient('mongodb://localhost:27017/')
 db = client.CropCoin
 investors_collection = db.investors
 farmers_collection = db.farmers
 companies_collection = db.companies
+
+
+class User(UserMixin):
+    def __init__(self, username):
+        self.id = username
+
+@login_manager.user_loader
+def load_user(username):
+    user = farmers_collection.find_one({'username': username}) or \
+           investors_collection.find_one({'username': username}) or \
+           companies_collection.find_one({'username': username})
+    if user:
+        return User(username)
+    return None
 
 
 @app.route('/')
@@ -64,32 +87,53 @@ def success():
 @app.route('/farmerLogin', methods=['GET','POST'])
 def farmer_login():
     if request.method == 'POST':    
-        fullname = request.form.get('fullname')
+        username = request.form.get('username')
         aadhar = request.form.get('aadhar')
         password = request.form.get('password')
 
-        print(f"Received credentials - Fullname: {fullname}, Aadhar: {aadhar}")
+        print(f"Received credentials - Username: {username}, Aadhar: {aadhar}")
 
-        user = farmers_collection.find_one({'fullname': fullname, 'aadhar': aadhar})
+        user = farmers_collection.find_one({'username': username}) or \
+               investors_collection.find_one({'username': username}) or \
+               companies_collection.find_one({'username': username})
 
         if user:
             print(f"User object from DB: {user}")
             if check_password_hash(user['password'], password):
+                login_user(User(username)) 
                 return redirect(url_for('farmer_dashboard'))
             else:
-                return "Invalid credentials"
+                return "Invalid credentials", 401
         else:
             return "User not found"
     return render_template('farmerLogin.html')
 
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 @app.route('/farmerDashboard')
+@login_required
 def farmer_dashboard():
     return render_template('farmerDashboard.html')
 
-@app.route('/farmerProfile.html')
+
+
+@app.route('/farmerProfile')
+@login_required
 def farmer_profile():
-    return render_template('farmerProfile.html')
+    username = current_user.id
+    user = farmers_collection.find_one({'username': username})
+    if user:
+        print(f"User found: {user}")  # Debugging line
+        return render_template('farmerProfile.html', farmer=user)
+    else:
+        print("No user found")  # Debugging line
+        return "User not found", 404
+
+
 
 @app.route('/Fertilizers.html')
 def fertilizers():
