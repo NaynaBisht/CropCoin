@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
         eyeIcon.addEventListener("click", togglePasswordVisibility);
     });
 
-    var userTypeSelect = document.querySelector('select[name="user_type"]');
+    var userTypeSelect = document.querySelector('select[name="usertype"]');
 
     var farmLocationLabel = document.getElementById('farm_location_label');
     var farmLocationInput = document.getElementById('farm_location_input');

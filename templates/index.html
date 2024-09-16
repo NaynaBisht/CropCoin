@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CropCoin</title>
-    <link rel="icon" href="../assets/pictures/planting.png" type="image/png">
+    <link rel="icon" href="../static/assets/planting.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;900&display=swap" rel="stylesheet">
 
 </head>
 
 
-<body class="font-poppins bg-cover bg-no-repeat min-h-screen w-full overflow-relative" style="background-image: url('../assets/pictures/output-onlinepngtools.png');">
+<body class="font-poppins bg-cover bg-no-repeat min-h-screen w-full overflow-relative" style="background-image: url('../static/assets/output-onlinepngtools.png');">
 
     <nav class="m-4 p-2 shadow-md bg-green-200 bg-opacity-70">
         <ul class="flex justify-center space-x-12 bg-yellow-200 bg-opacity-90 p-1">
@@ -25,7 +25,7 @@
         <div class="flex flex-col md:flex-row items-center justify-between mx-24 mt-4">
 
             <div class="flex items-center space-x-4">
-                <img src="../assets/pictures/99AN7RJA.png" alt="Planting Image" class="w-24 h-22">
+                <img src="../static/assets/99AN7RJA.png" alt="Planting Image" class="w-24 h-22">
                 <div>
                     <h1 class="text-4xl font-bold">CropCoin</h1>
                     <p class="text-lg">Invest And Grow In The Future</p>
@@ -40,10 +40,10 @@
                 </div> -->
                 
                 <div class="bg-yellow-500 font-bold text-lg py-2 px-4 rounded hover:bg-green-600">
-                    <a href="register.html">
-                        <button ></button>Register</button>
+                    <a href="{{ url_for('register') }}">
+                        <button>Register</button>
                     </a>
-                </div>
+                </div>                
                     
             </div>
         </div>
@@ -51,35 +51,35 @@
 
     <main class="m-4 mx-48 p-2">
         <div class="flex justify-between flex-wrap">
-            <section class="bg-white h-64 w-64 p-4 border border-gray-300 rounded-md shadow-sm relative overflow-hidden" style="background-image: url('../assets/pictures/illustration-farmer-field.png'); background-size: cover; background-position: center;">
+            <section class="bg-white h-64 w-64 p-4 border border-gray-300 rounded-md shadow-sm relative overflow-hidden" style="background-image: url('../static/assets/illustration-farmer-field.png'); background-size: cover; background-position: center;">
                 <a href="farmerLogin.html">
                     <h1 class="text-xl text-black font-bold">Farmer Dashboard</h1>
                 </a>
             </section>
 
-            <section class="bg-white h-64 w-64 p-4 border border-gray-300 rounded-md shadow-sm relative overflow-hidden" style="background-image: url('../assets/pictures/small-business-owner-shaking-hands-with-moneylender.png'); background-size: cover; background-position: center;">
+            <section class="bg-white h-64 w-64 p-4 border border-gray-300 rounded-md shadow-sm relative overflow-hidden" style="background-image: url('../static/assets/small-business-owner-shaking-hands-with-moneylender.png'); background-size: cover; background-position: center;">
                 <a href="marketLogin.html"><h1 class="text-xl font-bold">Market Place</h1></a>
             </section>
             
         </div>
 
         <div class="flex justify-between flex-wrap mt-6">
-            <section class="bg-white h-64 w-64 p-4 border border-gray-300 rounded-md shadow-sm relative overflow-hidden" style="background-image: url('../assets/pictures/stock-market-analysis-illustration.png'); background-size: cover; background-position: center;">
-                <a href="#"><h1 class="text-xl font-bold">Financial Market</h1></a>
+            <section class="bg-white h-64 w-64 p-4 border border-gray-300 rounded-md shadow-sm relative overflow-hidden" style="background-image: url('../static/assets/stock-market-analysis-illustration.png'); background-size: cover; background-position: center;">
+                <a href="FinanceIndex.html"><h1 class="text-xl font-bold">Financial Market</h1></a>
             </section>
 
-            <section class="bg-white h-64 w-64 p-4 border border-gray-300 rounded-md shadow-sm relative overflow-hidden" style="background-image: url('../assets/pictures/partnership-concept-illustration.png'); background-size: cover; background-position: center;">
+            <section class="bg-white h-64 w-64 p-4 border border-gray-300 rounded-md shadow-sm relative overflow-hidden" style="background-image: url('../static/assets/partnership-concept-illustration.png'); background-size: cover; background-position: center;">
                 <h1 class="text-xl font-bold">Stakeholder Dashboard</h1>
             </section>
             
         </div>
 
         <div class="flex justify-between flex-wrap mt-6">
-            <section class="bg-white h-64 w-64 p-4 border border-gray-300 rounded-md shadow-sm relative overflow-hidden" style="background-image: url('../assets/pictures/business-team-brainstorming-discussing-startup-project.png'); background-size: cover; background-position: center;">
+            <section class="bg-white h-64 w-64 p-4 border border-gray-300 rounded-md shadow-sm relative overflow-hidden" style="background-image: url('../static/assets/business-team-brainstorming-discussing-startup-project.png'); background-size: cover; background-position: center;">
                 <h1 class="text-xl font-bold">Application Status</h1>
             </section>
 
-            <section class="bg-white h-64 w-64 p-4 border border-gray-300 rounded-md shadow-sm relative overflow-hidden" style="background-image: url('../assets/pictures/flat-customer-support-illustration.png'); background-size: cover; background-position: center;">
+            <section class="bg-white h-64 w-64 p-4 border border-gray-300 rounded-md shadow-sm relative overflow-hidden" style="background-image: url('../static/assets/flat-customer-support-illustration.png'); background-size: cover; background-position: center;">
                 <h1 class="text-xl font-bold">Admin Dashboard</h1>
             </section>
         </div>
