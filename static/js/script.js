@@ -44,12 +44,12 @@ document.addEventListener("DOMContentLoaded", function() {
         companyNameInput.style.display = "none";
         companyNameLabel.style.display = "none";
 
-        if (userType === "customer") {
+        if (userType === "farmer") {
             farmLocationInput.style.display = "block";
             farmLocationLabel.style.display = "block";
             farmSizeInput.style.display = "block";
             farmSizeLabel.style.display = "block";
-        } else if (userType === "stakeholder") {
+        } else if (userType === "company") {
             companyNameInput.style.display = "block";
             companyNameLabel.style.display = "block";
         }

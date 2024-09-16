@@ -47,4 +47,8 @@ if __name__ == "__main__":
     threading.Thread(target=update_price, daemon=True).start()
     
     # Start the WebSocket server
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("Process interrupted.")
+

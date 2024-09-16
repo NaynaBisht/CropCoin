@@ -2,13 +2,16 @@
 from flask import Flask, request, render_template, redirect, url_for, jsonify
 from check import Stock
 from pymongo import MongoClient
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 s = Stock()
 
 client = MongoClient('mongodb://localhost:27017/')
-db = client.cropcoin  
-farmers_collection = db.farmers  
+db = client.CropCoin
+investors_collection = db.investors
+farmers_collection = db.farmers
+companies_collection = db.companies
 
 
 @app.route('/')
@@ -28,11 +31,23 @@ def register():
         farmloc = request.form.get('farm_location')  
         farmsize = request.form.get('farm_size')
 
-        farmers_collection.insert_one({
+        hashed_password = generate_password_hash(password)
+
+        # Determine the collection based on usertype
+        if usertype == 'investor':
+            collection = investors_collection
+        elif usertype == 'farmer':
+            collection = farmers_collection
+        elif usertype == 'company':
+            collection = companies_collection
+        else:
+            return redirect(url_for('index'))
+        
+        collection.insert_one({
             'fullname': fullname,
             'aadhar': aadhar,
             'username': username,
-            'password': password,
+            'password': hashed_password,
             'usertype': usertype,
             'company': company,
             'farm_location': farmloc,
@@ -46,6 +61,47 @@ def register():
 def success():
     return render_template('index.html')
 
+@app.route('/farmerLogin', methods=['GET','POST'])
+def farmer_login():
+    if request.method == 'POST':    
+        fullname = request.form.get('fullname')
+        aadhar = request.form.get('aadhar')
+        password = request.form.get('password')
+
+        print(f"Received credentials - Fullname: {fullname}, Aadhar: {aadhar}")
+
+        user = farmers_collection.find_one({'fullname': fullname, 'aadhar': aadhar})
+
+        if user:
+            print(f"User object from DB: {user}")
+            if check_password_hash(user['password'], password):
+                return redirect(url_for('farmer_dashboard'))
+            else:
+                return "Invalid credentials"
+        else:
+            return "User not found"
+    return render_template('farmerLogin.html')
+
+
+@app.route('/farmerDashboard')
+def farmer_dashboard():
+    return render_template('farmerDashboard.html')
+
+@app.route('/farmerProfile.html')
+def farmer_profile():
+    return render_template('farmerProfile.html')
+
+@app.route('/Fertilizers.html')
+def fertilizers():
+    return render_template('Fertilizers.html')
+
+@app.route('/itemsBought.html')
+def item_bought():
+    return render_template('itemsBought.html')
+
+@app.route('/Seeds.html')
+def seeds():
+    return render_template('Seeds.html')
 
 @app.route('/FinanceIndex.html')
 def finance_index():
@@ -66,29 +122,7 @@ def invoice():
 @app.route('/Equipment.html')
 def equipments():
     return render_template('Equipment.html')
-@app.route('/farmerLogin.html')
-def farmer_login():
-    return render_template('farmerLogin.html')
 
-@app.route('/farmerDashboard.html')
-def farmer_dashboard():
-    return render_template('farmerDashboard.html')
-
-@app.route('/farmerProfile.html')
-def farmer_profile():
-    return render_template('farmerProfile.html')
-
-@app.route('/Fertilizers.html')
-def fertilizers():
-    return render_template('Fertilizers.html')
-
-@app.route('/itemsBought.html')
-def item_bought():
-    return render_template('itemsBought.html')
-
-@app.route('/Seeds.html')
-def seeds():
-    return render_template('Seeds.html')
 
 @app.route('/buy', methods=['POST'])
 def buy():

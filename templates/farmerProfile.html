@@ -54,27 +54,18 @@
         </div>
     </nav>
     <main class="category-section">
-        <form action="#" class="flex flex-col gap-4">
-            <div>
-                <label for="fullname" class=" font-bold text-lg">Full Name :</label>
-                <input id="fullname" class="form-input p-2 rounded-xl border" type="text" name="fullname" placeholder="Kishor Singh">
-            </div>
-
-            <div>
-                <label for="aadhar" class=" font-bold text-lg">Aadhar Number :</label>
-                <input id="aadhar" class="form-input p-2 rounded-xl border" type="text" name="aadhar" placeholder="123456781928">
-            </div>
-
-            <div>
-                <label for="size" class=" font-bold text-lg">Farm Size :</label>
-                <input id="size" class="form-input p-2 rounded-xl border" type="number" name="size" placeholder="500 acres">
-            </div>
-
-            <div>
-                <label for="location" class=" font-bold text-lg">Farm Location :</label>
-                <input id="location" class="form-input p-2 rounded-xl border" type="text" name="location" placeholder="Bihar">
-            </div>
-        </form>
+        {% if farmers %}
+            {% for farmer in farmers %}
+                <div class="mb-4">
+                    <h2 class="text-2xl font-bold">{{ farmer.fullname }}</h2>
+                    <p><strong>Aadhar Number:</strong> {{ farmer.aadhar }}</p>
+                    <p><strong>Farm Size:</strong> {{ farmer.farm_size }} acres</p>
+                    <p><strong>Farm Location:</strong> {{ farmer.farm_location }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No farmers found.</p>
+        {% endif %}
     </main>
 </body>
 </html>
