@@ -37,10 +37,19 @@ document.addEventListener("DOMContentLoaded", function() {
     var passwordInputSvg = document.getElementById('passwordsvg');
 
     // farmer
-    var farmLocationLabel = document.getElementById('farm_location_label');
-    var farmLocationInput = document.getElementById('farm_location_input');
+    var farmernameLabel = document.getElementById('farmernameLabel');
+    var farmernameInput = document.getElementById('farmername');
+    var farmeraadharLabel = document.getElementById('farmeraadharLabel');
+    var farmeraadharInput = document.getElementById('farmeraadhar');
+    var farmerusernameLabel = document.getElementById('farmerusernameLabel');
+    var farmerusernameInput = document.getElementById('farmerusername');
+    var farmerpasswordLabel = document.getElementById('farmerpasswordLabel');
+    var farmerpasswordInput = document.getElementById('farmerpassword');
+    var farmerpasswordSvg = document.getElementById('farmerpasswordsvg');
     var farmSizeLabel = document.getElementById('farm_size_label');
     var farmSizeInput = document.getElementById('farm_size_input');
+    var farmLocationLabel = document.getElementById('farm_location_label');
+    var farmLocationInput = document.getElementById('farm_location_input');
 
     // company
     var companyNameLabel = document.getElementById('company_name_label');
@@ -57,6 +66,15 @@ document.addEventListener("DOMContentLoaded", function() {
     function handleUserTypeChange() {
         var userType = userTypeSelect.value;
 
+        farmernameInput.style.display = "none";
+        farmernameLabel.style.display = "none";
+        farmeraadharInput.style.display = "none";
+        farmeraadharLabel.style.display = "none";
+        farmerusernameInput.style.display = "none";
+        farmerusernameLabel.style.display = "none";
+        farmerpasswordInput.style.display = "none";
+        farmerpasswordLabel.style.display = "none";
+        farmerpasswordSvg.style.display = "none";
         farmLocationInput.style.display = "none";
         farmLocationLabel.style.display = "none";
         farmSizeInput.style.display = "none";
@@ -80,13 +98,45 @@ document.addEventListener("DOMContentLoaded", function() {
             passwordInput.style.display = "block";   
             passwordLabel.style.display = "block";
             passwordInputSvg.style.display = "block";
+            farmernameInput.style.display = "none";
+            farmernameLabel.style.display = "none";
+            farmeraadharInput.style.display = "none";
+            farmeraadharLabel.style.display = "none";
+            farmerusernameInput.style.display = "none";
+            farmerusernameLabel.style.display = "none";
+            farmerpasswordInput.style.display = "none";
+            farmerpasswordLabel.style.display = "none";
+            farmerpasswordSvg.style.display = "none";
+            farmLocationInput.style.display = "none";
+            farmLocationLabel.style.display = "none";
+            farmSizeInput.style.display = "none";
+            farmSizeLabel.style.display = "none";
         }
         
         else if (userType === "farmer") {
+            fullnameInput.style.display = "none";
+            fullnameLabel.style.display = "none";
+            aadharInput.style.display = "none";
+            aadharLabel.style.display = "none";
+            usernameInput.style.display = "none";
+            usernameLabel.style.display = "none";
+            passwordInput.style.display = "none";   
+            passwordLabel.style.display = "none";
+            passwordInputSvg.style.display = "none";
+            farmernameInput.style.display = "block";
+            farmernameLabel.style.display = "block";
+            farmeraadharInput.style.display = "block";
+            farmeraadharLabel.style.display = "block";
+            farmerusernameInput.style.display = "block";
+            farmerusernameLabel.style.display = "block";
+            farmerpasswordInput.style.display = "block";
+            farmerpasswordLabel.style.display = "block";
+            farmerpasswordSvg.style.display = "block";
             farmLocationInput.style.display = "block";
             farmLocationLabel.style.display = "block";
             farmSizeInput.style.display = "block";
             farmSizeLabel.style.display = "block";
+            
         } 
         else if (userType === "company") {
 
