@@ -58,9 +58,9 @@
         <h1 class="text-3xl font-bold mb-6">Profile</h1>
         {% if farmer %}
             <div class="bg-green-50 p-4 rounded-lg border border-green-300">
-                <h2 class="text-2xl font-semibold mb-2">{{ farmer.fullname }}</h2>
-                <p class="text-lg mb-2"><strong>Aadhar Number:</strong> {{ farmer.aadhar }}</p>
-                <p class="text-lg mb-2"><strong>User Name:</strong> {{ farmer.username }}</p>
+                <h2 class="text-2xl font-semibold mb-2">{{ farmer.farmername }}</h2>
+                <p class="text-lg mb-2"><strong>Aadhar Number:</strong> {{ farmer.farmeraadhar }}</p>
+                <p class="text-lg mb-2"><strong>User Name:</strong> {{ farmer.farmerusername }}</p>
                 <p class="text-lg mb-2"><strong>User Type:</strong> {{ farmer.usertype }}</p>
                 <p class="text-lg mb-2"><strong>Farm Size:</strong> {{ farmer.farm_size }} acres</p>
                 <p class="text-lg mb-2"><strong>Farm Location:</strong> {{ farmer.farm_location }}</p>

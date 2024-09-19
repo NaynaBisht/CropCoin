@@ -1,5 +1,7 @@
 function togglePasswordVisibility() {
     var passwordInput = document.getElementsByName("password")[0];
+    var farmerpasswordInput = document.getElementsByName("farmerpassword")[0];
+    var companypasswordInput = document.getElementsByName("companypassword")[0];
     var eyeIcons = document.querySelectorAll(".bi-eye");
 
     if (passwordInput.type === "password") {
@@ -10,6 +12,32 @@ function togglePasswordVisibility() {
         });
     } else {
         passwordInput.type = "password";
+        eyeIcons.forEach(function(eyeIcon) {
+            eyeIcon.classList.remove("bi-eye-slash");
+            eyeIcon.classList.add("bi-eye");
+        });
+    }
+    if (farmerpasswordInput.type === "password") {
+        farmerpasswordInput.type = "text";
+        eyeIcons.forEach(function(eyeIcon) {
+            eyeIcon.classList.remove("bi-eye");
+            eyeIcon.classList.add("bi-eye-slash");
+        });
+    } else {
+        farmerpasswordInput.type = "password";
+        eyeIcons.forEach(function(eyeIcon) {
+            eyeIcon.classList.remove("bi-eye-slash");
+            eyeIcon.classList.add("bi-eye");
+        });
+    }
+    if (companypasswordInput.type === "password") {
+        companypasswordInput.type = "text";
+        eyeIcons.forEach(function(eyeIcon) {
+            eyeIcon.classList.remove("bi-eye");
+            eyeIcon.classList.add("bi-eye-slash");
+        });
+    } else {
+        companypasswordInput.type = "password";
         eyeIcons.forEach(function(eyeIcon) {
             eyeIcon.classList.remove("bi-eye-slash");
             eyeIcon.classList.add("bi-eye");

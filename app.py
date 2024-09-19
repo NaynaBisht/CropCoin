@@ -1,4 +1,3 @@
-
 from flask import Flask, request, render_template, redirect, url_for, jsonify
 from check import Stock
 from pymongo import MongoClient
@@ -24,16 +23,18 @@ companies_collection = db['companies']
 
 
 class User(UserMixin):
-    def __init__(self, username):
+    def __init__(self, username, user_type):
         self.id = username
+        self.user_type = user_type  # Store additional information if needed
 
 @login_manager.user_loader
 def load_user(username):
-    user = farmers_collection.find_one({'username': username}) or \
+    user = farmers_collection.find_one({'farmerusername': username}) or \
            investors_collection.find_one({'username': username}) or \
            companies_collection.find_one({'username': username})
+    
     if user:
-        return User(username)
+        return User(username, user.get('usertype', 'unknown'))  # Pass additional info if needed
     return None
 
 
@@ -44,7 +45,7 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-    # Fetch form data
+        # Fetch form data
         usertype = request.form.get('usertype')
         print(f"Received Usertype: {usertype}")
 
@@ -77,7 +78,6 @@ def register():
                 return redirect(url_for('success'))
             else:
                 return "Investor: Missing fields", 400
-    
 
         elif usertype == 'farmer':
             # Farmer-specific fields
@@ -129,8 +129,8 @@ def register():
                     'org_name': company,
                     'companypassword': hashed_companypassword,
                     'companytype': companytype,
-                    'seed_subcategories[]': seed_subcategories,
-                    'equipment_subcategories[]': equipment_subcategories,
+                    'seed_subcategories': seed_subcategories,  # Corrected key
+                    'equipment_subcategories': equipment_subcategories,  # Corrected key
                     'usertype': 'company'
                 }
                 companies_collection.insert_one(user_data)
@@ -153,25 +153,22 @@ def success():
 @app.route('/farmerLogin', methods=['GET','POST'])
 def farmer_login():
     if request.method == 'POST':    
-        username = request.form.get('username')
+        username = request.form.get('username').lower()
         aadhar = request.form.get('aadhar')
         password = request.form.get('password')
 
         print(f"Received credentials - Username: {username}, Aadhar: {aadhar}")
 
-        user = farmers_collection.find_one({'username': username}) or \
-               investors_collection.find_one({'username': username}) or \
-               companies_collection.find_one({'username': username})
+        # Query to find the user with the correct field names
+        user = farmers_collection.find_one({'farmerusername': username, 'farmeraadhar': aadhar})
 
-        if user:
-            print(f"User object from DB: {user}")
-            if check_password_hash(user['password'], password):
-                login_user(User(username)) 
-                return redirect(url_for('farmer_dashboard'))
-            else:
-                return "Invalid credentials", 401
+        if user and check_password_hash(user['farmerpassword'], password):
+            user_type = user.get('usertype', 'unknown')  # Default to 'unknown' if not set
+            login_user(User(username, user_type))
+            return redirect(url_for('farmer_dashboard'))
         else:
-            return "User not found"
+            return "Invalid credentials", 401
+            
     return render_template('farmerLogin.html')
 
 @app.route('/logout')
@@ -185,21 +182,17 @@ def logout():
 def farmer_dashboard():
     return render_template('farmerDashboard.html')
 
-
-
 @app.route('/farmerProfile')
 @login_required
 def farmer_profile():
     username = current_user.id
-    user = farmers_collection.find_one({'username': username})
+    user = farmers_collection.find_one({'farmerusername': username})  # Corrected field name
     if user:
         print(f"User found: {user}")  # Debugging line
         return render_template('farmerProfile.html', farmer=user)
     else:
         print("No user found")  # Debugging line
         return "User not found", 404
-
-
 
 @app.route('/Fertilizers.html')
 def fertilizers():
@@ -232,7 +225,6 @@ def invoice():
 @app.route('/Equipment.html')
 def equipments():
     return render_template('Equipment.html')
-
 
 @app.route('/buy', methods=['POST'])
 def buy():
