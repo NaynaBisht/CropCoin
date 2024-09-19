@@ -17,10 +17,10 @@ login_manager.login_view = 'login'
 
 
 client = MongoClient('mongodb://localhost:27017/')
-db = client.CropCoin
-investors_collection = db.investors
-farmers_collection = db.farmers
-companies_collection = db.companies
+db = client['CropCoin']
+investors_collection = db['investors']
+farmers_collection = db['farmers']
+companies_collection = db['companies']
 
 
 class User(UserMixin):
@@ -44,41 +44,107 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        # Fetch form data
-        fullname = request.form.get('fullname')
-        aadhar = request.form.get('aadhar')
-        username = request.form.get('username')
-        password = request.form.get('password')
+    # Fetch form data
         usertype = request.form.get('usertype')
-        company = request.form.get('org_name')  
-        farmloc = request.form.get('farm_location')  
-        farmsize = request.form.get('farm_size')
+        print(f"Received Usertype: {usertype}")
 
-        hashed_password = generate_password_hash(password)
+        for key, value in request.form.items():
+            print(f"Form Data - {key}: {value}")
+
+        user_data = {}
+        collection = None
 
         # Determine the collection based on usertype
         if usertype == 'investor':
-            collection = investors_collection
+            # Fetch investor-specific fields (as needed)
+            fullname = request.form.get('fullname')
+            aadhar = request.form.get('aadhar')
+            username = request.form.get('username')
+            password = request.form.get('password')
+
+            if fullname and aadhar and username and password:
+                print(f"Investor Details: Fullname: {fullname}, Aadhar: {aadhar}, Username: {username}")
+                hashed_password = generate_password_hash(password)
+
+                user_data = {
+                    'fullname': fullname,
+                    'aadhar': aadhar,
+                    'username': username,
+                    'password': hashed_password,
+                    'usertype': 'investor'
+                }
+                investors_collection.insert_one(user_data)
+                return redirect(url_for('success'))
+            else:
+                return "Investor: Missing fields", 400
+    
+
         elif usertype == 'farmer':
-            collection = farmers_collection
+            # Farmer-specific fields
+            fullname = request.form.get('farmername')
+            aadhar = request.form.get('farmeraadhar')
+            username = request.form.get('farmerusername')
+            password = request.form.get('farmerpassword')
+            farmloc = request.form.get('farm_location')
+            farmsize = request.form.get('farm_size')
+
+            # Ensure all required fields are filled
+            if fullname and aadhar and username and password and farmloc and farmsize:
+                print(f"Farmer Details: Fullname: {fullname}, Aadhar: {aadhar}, Username: {username}")
+                print(f"Farm Location: {farmloc}, Farm Size: {farmsize}")
+                hashed_password = generate_password_hash(password)
+
+                user_data = {
+                    'farmername': fullname,
+                    'farmeraadhar': aadhar,
+                    'farmerusername': username,
+                    'farmerpassword': hashed_password,
+                    'farm_location': farmloc,
+                    'farm_size': farmsize,
+                    'usertype': 'farmer'
+                }
+                farmers_collection.insert_one(user_data)
+                return redirect(url_for('success'))
+            else:
+                return "Farmer: Missing fields", 400
+
         elif usertype == 'company':
-            collection = companies_collection
+            # Fetch company-specific fields
+            company = request.form.get('org_name')
+            companypassword = request.form.get('companypassword')
+            companytype = request.form.get('companytype')
+            seed_subcategories = request.form.getlist('seed_subcategories[]')
+            equipment_subcategories = request.form.getlist('equipment_subcategories[]')
+
+            # Debug prints
+            print(f"Company Details: Company: {company}, Company Type: {companytype}")
+            print(f"Seed Subcategories: {seed_subcategories}, Equipment Subcategories: {equipment_subcategories}")
+
+            if company and companypassword and companytype:
+                print(f"Company Details: Company: {company}, Company Type: {companytype}")
+                print(f"Seed Subcategories: {seed_subcategories}, Equipment Subcategories: {equipment_subcategories}")
+                hashed_companypassword = generate_password_hash(companypassword)
+
+                user_data = {
+                    'org_name': company,
+                    'companypassword': hashed_companypassword,
+                    'companytype': companytype,
+                    'seed_subcategories[]': seed_subcategories,
+                    'equipment_subcategories[]': equipment_subcategories,
+                    'usertype': 'company'
+                }
+                companies_collection.insert_one(user_data)
+                return redirect(url_for('success'))
+            else:
+                return "Company: Missing fields", 400
+
         else:
+            # Handle invalid usertype
+            print(f"Invalid Usertype: {usertype}")
             return redirect(url_for('index'))
         
-        collection.insert_one({
-            'fullname': fullname,
-            'aadhar': aadhar,
-            'username': username,
-            'password': hashed_password,
-            'usertype': usertype,
-            'company': company,
-            'farm_location': farmloc,
-            'farm_size': farmsize
-        })
-        
-        return redirect(url_for('success'))
     return render_template('register.html')
+
 
 @app.route('/success')
 def success():
