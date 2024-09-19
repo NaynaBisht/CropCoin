@@ -210,8 +210,25 @@ def seeds():
 def finance_index():
     return render_template('FinanceIndex.html', current_price=s.price, transactions=[])
 
-@app.route('/marketLogin.html')
+
+@app.route('/marketLogin.html', methods=['GET', 'POST'])
 def market_login():
+    if request.method == 'POST':    
+        username = request.form.get('username').lower()
+        aadhar = request.form.get('aadhar')
+        password = request.form.get('password')
+
+        print(f"Received credentials - Username: {username}, Aadhar: {aadhar}")
+
+        # Query to find the user with the correct field names
+        user = farmers_collection.find_one({'farmerusername': username, 'farmeraadhar': aadhar})
+
+        if user and check_password_hash(user['farmerpassword'], password):
+            user_type = user.get('usertype', 'unknown')  # Default to 'unknown' if not set
+            login_user(User(username, user_type))
+            return redirect(url_for('marketplace'))
+        else:
+            return "Invalid credentials", 401
     return render_template('marketLogin.html')
 
 @app.route('/marketplace.html')
