@@ -200,14 +200,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const selectedType = companyTypeSelect.value;
 
         // Hide all sections
-        document.getElementById('seeds-subcategories').classList.add('hidden');
-        document.getElementById('equipment-subcategories').classList.add('hidden');
+        document.getElementById('seeds_subcategories').classList.add('hidden');
+        document.getElementById('equipment_subcategories').classList.add('hidden');
 
         // Show the selected section
         if (selectedType === 'seeds') {
-            document.getElementById('seeds-subcategories').classList.remove('hidden');
+            document.getElementById('seeds_subcategories').classList.remove('hidden');
         } else if (selectedType === 'equipment') {
-            document.getElementById('equipment-subcategories').classList.remove('hidden');
+            document.getElementById('equipment_subcategories').classList.remove('hidden');
         }
     }
 

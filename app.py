@@ -113,23 +113,23 @@ def register():
             company = request.form.get('org_name')
             companypassword = request.form.get('companypassword')
             companytype = request.form.get('companytype')
-            seed_subcategories = request.form.getlist('seed_subcategories[]')
-            equipment_subcategories = request.form.getlist('equipment_subcategories[]')
+            seeds_subcategories = request.form.getlist('seeds_subcategories')
+            equipment_subcategories = request.form.getlist('equipment_subcategories')
 
             # Debug prints
             print(f"Company Details: Company: {company}, Company Type: {companytype}")
-            print(f"Seed Subcategories: {seed_subcategories}, Equipment Subcategories: {equipment_subcategories}")
+            print(f"Seed Subcategories: {seeds_subcategories}, Equipment Subcategories: {equipment_subcategories}")
 
             if company and companypassword and companytype:
                 print(f"Company Details: Company: {company}, Company Type: {companytype}")
-                print(f"Seed Subcategories: {seed_subcategories}, Equipment Subcategories: {equipment_subcategories}")
+                print(f"Seed Subcategories: {seeds_subcategories}, Equipment Subcategories: {equipment_subcategories}")
                 hashed_companypassword = generate_password_hash(companypassword)
 
                 user_data = {
                     'org_name': company,
                     'companypassword': hashed_companypassword,
                     'companytype': companytype,
-                    'seed_subcategories': seed_subcategories,  # Corrected key
+                    'seeds_subcategories': seeds_subcategories,  # Corrected key
                     'equipment_subcategories': equipment_subcategories,  # Corrected key
                     'usertype': 'company'
                 }
