@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice - CropCoin</title>
-    <link rel="icon" href="../assets/pictures/planting.png" type="image/png">
+    <title>Farmer_Credits - CropCoin</title>
+    <link rel="icon" href="../static/assets/planting.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
             font-weight: bold;
-            background-image: url('../assets/pictures/output-onlinepngtools.png');
+            background-image: url('../static/assets/output-onlinepngtools.png');
             background-size: cover;
             background-repeat: no-repeat;
             min-height: 100vh;
@@ -83,10 +83,10 @@
     </style>
 </head>
 <body>
-    <h1>Invoice - CropCoin</h1>
+    <h1>Credits - CropCoin</h1>
 
     <div class="invoice-container">
-        <div class="invoice-header">Your Invoice</div>
+        <div class="invoice-header">Your Credit History</div>
         <table class="invoice-table">
             <thead>
                 <tr>
@@ -103,7 +103,7 @@
         <div class="total-section">
             Total Items: <span id="totalItems">0</span> | Total Price: ₹<span id="totalPrice">0</span>
         </div>
-        <a id="payButton" href="index.html" >Pay Now</a>
+        <a id="payButton" href="#" >Total Credits: </a>
     </div>
 
     <script>
@@ -142,107 +142,60 @@
 
             document.getElementById('totalItems').textContent = totalItems;
             document.getElementById('totalPrice').textContent = totalPrice;
-
-            const invoiceData = {
-                items: items,
-                totalItems: totalItems,
-                totalPrice: totalPrice
-            };
-        
-            fetch('/get_invoices')
-            .then(response => response.json())
-            .then(invoices => {
-                invoiceBody.innerHTML = ''; // Clear the table first
-
-                invoices.forEach(invoice => {
-                    invoice.items.forEach(item => {
-                        const row = document.createElement('tr');
-
-                        const nameCell = document.createElement('td');
-                        nameCell.textContent = item.name;
-                        row.appendChild(nameCell);
-
-                        const quantityCell = document.createElement('td');
-                        quantityCell.textContent = item.quantity;
-                        row.appendChild(quantityCell);
-
-                        const priceCell = document.createElement('td');
-                        priceCell.textContent = item.price;
-                        row.appendChild(priceCell);
-
-                        const totalCell = document.createElement('td');
-                        const itemTotal = item.quantity * item.price;
-                        totalCell.textContent = itemTotal;
-                        row.appendChild(totalCell);
-
-                        invoiceBody.appendChild(row);
-
-                        totalItems += item.quantity;
-                        totalPrice += itemTotal;
-                    });
-                });
-
-                // Update total items and price in the UI
-                document.getElementById('totalItems').textContent = totalItems;
-                document.getElementById('totalPrice').textContent = totalPrice;
-            })
-            .catch(error => {
-                console.error('Error fetching invoices:', error);
-            });
-    }
-
-    window.onload = generateInvoice;
-
-
-        async function fetchInvoices() {
-            try {
-                const response = await fetch('/get_invoices');
-                const invoices = await response.json();
-                
-                const invoiceBody = document.getElementById('invoiceBody');
-                let totalItems = 0;
-                let totalPrice = 0;
-
-                // Clear any existing rows
-                invoiceBody.innerHTML = '';
-
-                invoices.forEach(invoice => {
-                    invoice.items.forEach(item => {
-                        const row = document.createElement('tr');
-
-                        const nameCell = document.createElement('td');
-                        nameCell.textContent = item.name;
-                        row.appendChild(nameCell);
-
-                        const quantityCell = document.createElement('td');
-                        quantityCell.textContent = item.quantity;
-                        row.appendChild(quantityCell);
-
-                        const priceCell = document.createElement('td');
-                        priceCell.textContent = item.price;
-                        row.appendChild(priceCell);
-
-                        const totalCell = document.createElement('td');
-                        const itemTotal = item.quantity * item.price;
-                        totalCell.textContent = itemTotal;
-                        row.appendChild(totalCell);
-
-                        invoiceBody.appendChild(row);
-
-                        totalItems += item.quantity;
-                        totalPrice += itemTotal;
-                    });
-                });
-
-                document.getElementById('totalItems').textContent = totalItems;
-                document.getElementById('totalPrice').textContent = totalPrice;
-
-            } catch (error) {
-                console.error('Error fetching invoices:', error);
-            }
+            
         }
 
-        window.onload = fetchInvoices;
+        window.onload = generateInvoice;
+
+
+        function fetchInvoices() {
+    fetch('/get_invoices')
+        .then(response => response.json())
+        .then(data => {
+            const invoiceBody = document.getElementById('invoiceBody');
+            let totalItems = 0;
+            let totalPrice = 0;
+
+            data.forEach(invoice => {
+                invoice.items.forEach(item => {
+                    const row = document.createElement('tr');
+
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = item.name;
+                    row.appendChild(nameCell);
+
+                    const quantityCell = document.createElement('td');
+                    quantityCell.textContent = item.quantity;
+                    row.appendChild(quantityCell);
+
+                    const priceCell = document.createElement('td');
+                    priceCell.textContent = item.price;
+                    row.appendChild(priceCell);
+
+                    const totalCell = document.createElement('td');
+                    const itemTotal = item.quantity * item.price;
+                    totalCell.textContent = itemTotal;
+                    row.appendChild(totalCell);
+
+                    invoiceBody.appendChild(row);
+
+                    totalItems += item.quantity;
+                    totalPrice += itemTotal;
+                });
+            });
+
+            document.getElementById('totalItems').textContent = totalItems;
+            document.getElementById('totalPrice').textContent = totalPrice;
+            document.getElementById('payButton').textContent = `Total Credits: ₹${totalPrice}`;
+        })
+        .catch(error => {
+            console.error('Error fetching invoices:', error);
+        });
+}
+
+window.onload = fetchInvoices;
+
+
 
     </script>
 </body>
