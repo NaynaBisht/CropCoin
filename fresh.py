@@ -67,7 +67,7 @@ transform = transforms.Compose([
 ])
 
 # Directory containing test images
-test_folder = "C:/Users/vinay/Downloads/archive/dataset/Test/rottentamto"  # Replace with your actual folder path
+test_folder = "dataset"  # Replace with your actual folder path
 
 # Function to predict freshness and output results
 def predict_freshness(image_path):
