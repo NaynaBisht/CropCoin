@@ -81,7 +81,7 @@ def predict_freshness(image_path):
         pred_fresh_class = torch.argmax(pred_fresh, axis=1).item()
 
     # Generate freshness percentage based on freshness class
-    freshness_percentage = random.uniform(76, 92) if pred_fresh_class == 1 else random.uniform(83, 98)
+    freshness_percentage = random.uniform(0.76, 0.92) if pred_fresh_class == 1 else random.uniform(0.83, 0.98)
 
     freshness_status = fresh_labels[pred_fresh_class]
     status = list()
