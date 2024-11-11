@@ -90,9 +90,14 @@ def predict_freshness(image_path):
 
 s = Stock()
 # Loop through each image in the test folder every second
-for filename in os.listdir(test_folder):
-    if filename.lower().endswith(('.png')):  # Ensure only image files are processed
-        img_path = os.path.join(test_folder, filename)
-        status = predict_freshness(img_path)
-        s.fluctuate(status)
-        time.sleep(10)  # Wait for 1 second before processing the next image
+image_files = [filename for filename in os.listdir(test_folder) if filename.lower().endswith('.png')]
+
+# Shuffle the list to randomize the image selection
+random.shuffle(image_files)
+
+# Loop through the randomized list of image files
+for filename in image_files:
+    img_path = os.path.join(test_folder, filename)
+    status = predict_freshness(img_path)
+    s.fluctuate(status)
+    time.sleep(10)  # Wait for 1 second before processing the next image
