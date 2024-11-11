@@ -85,7 +85,8 @@ def predict_freshness(image_path):
 
     freshness_status = fresh_labels[pred_fresh_class]
     status = list()
-    status.append([freshness_status, freshness_percentage])
+    status.append(freshness_status)
+    status.append(freshness_percentage)
     return status
 
 s = Stock()
