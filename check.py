@@ -13,7 +13,7 @@ class Stock:
         freshness = status[0]
         fresh_perc = round(status[1], 2)
         with self.lock:
-            self.price = self.price + self.price*(fresh_perc - 0.82) if freshness == 1 else self.price - self.price*(fresh_perc - 0.75) 
+            self.price = self.price + self.price*(fresh_perc - 0.82) if freshness == 'Fresh' else self.price - self.price*(fresh_perc - 0.75) 
         self.send_price_to_stock()
 
     def update_price(self, outstanding_shares):
